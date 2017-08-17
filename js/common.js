@@ -1,3 +1,171 @@
+// Ползунки на page6.html
+
+var core         	    = 1,
+    ddr       		    = 1,
+    hdd           	    = 10,
+    netFrequency        = 10,
+    months			    = 1,
+    coreCost           = null,
+    ddrCost            = null,
+    hddCost          = null,
+    netFrequencyCost  = null,
+    monthsCost       = null,
+    total 			= 250;
+
+
+
+// Функция расчета
+function recount() {
+    total = coreCost
+        +ddrCost
+        +hddCost
+        +netFrequencyCost
+        +monthsCost;
+
+    jQuery("#billing").html(total);
+}
+
+
+    $(document).on("change click keyup", "#polz1", function() {
+        core = $( "#polz1" ).slider( "value" );
+        console.log (core);
+        coreCost = (core === 0 ) ? 0 : // 1
+            (core === 1 ) ? 150 :   //2
+                (core === 2 ) ? 300 :   //3
+                    (core === 3 ) ? 450 :   //4
+                        (core === 4 ) ? 750 :   //6
+                            (core === 5 ) ? 850 : //8
+                                    (core === 6 ) ? 1200 : //12
+                                      console.log ("coreCost ===" + coreCost);
+
+        recount();
+        return false;
+    });
+
+    $(document).on("change click", "#polz2", function() {
+        ddr =  $( "#polz2" ).slider( "value" );
+        ddrCost = (ddr === 512) ? 0 :
+            (ddr === 1) ? 50 :
+                (ddr === 2) ? 100 :
+                    (ddr === 3) ? 200 :
+                        (ddr === 4) ? 300 :
+                            (ddr === 6) ? 100 :
+                                (ddr === 8) ? 700 :
+                                    (ddr === 10) ? 900 :
+                                        (ddr === 12) ? 1000 :
+                                            console.log ("ddrCost ===" + ddrCost);
+        recount();
+    });
+
+    $(document).on("change click", "#polz3", function() {
+        hdd = $( "#polz3" ).slider( "value" );
+        hddCost = (hdd === 5) ? 0:
+            (hdd === 7) ? 20:
+                (hdd === 10) ? 25:
+                    (hdd === 15) ? 50:
+                        (hdd === 20) ? 75:
+                            (hdd === 25) ? 100:
+                                (hdd === 30) ? 125:
+                                    (hdd === 40) ? 150:
+                                        (hdd === 50) ? 175:
+                                            console.log ("hddCost ===" + hddCost);
+
+        recount();
+    });
+
+    $(document).on("change click", "#polz4", function() {
+        netFrequency = $( "#polz4" ).slider( "value" );
+        netFrequencyCost = (netFrequency === 50) ? 0 :
+            (netFrequency === 100) ? 100 :
+                console.log ("netFrequencyCost ===" + netFrequencyCost);
+
+        recount();
+    });
+
+    $(document).on("change click", "#polz5", function() {
+        months = $( "#polz5" ).slider( "value" );
+        console.log (months);
+        monthsCost = (months === 1) ? 250 :
+            (months === 3) ? 750 :
+                (months === 6) ? 1500 :
+                    (months === 12) ? 3000 :
+                        console.log ("monthsCost ===" + monthsCost);
+
+        recount();
+    });
+
+//Стили ползунков
+
+$( function() {
+    var coreValue = [1, 2, 3, 4, 6, 8, 12];
+
+    $( "#polz1" ).slider({
+        range: "max",
+        min: 0,
+        max: 6,
+        value: 0,
+        step: 1,
+        slide: function( event, ui ) {
+            $( "#polz1-inp" ).val( coreValue [ui.value] );
+        }
+    });
+   // $( "#polz1-inp" ).val( sliderValue [$( "#polz1" ).slider( "value" )] );
+    return false;
+});
+
+$( function() {
+    $( "#polz2" ).slider({
+        range: "max",
+        min: 1,
+        max: 64,
+        slide: function( event, ui ) {
+            $( "#polz2-inp" ).val( ui.value );
+        }
+    });
+    $( "#polz2-inp" ).val( $( "#polz2" ).slider( "value" ) );
+});
+
+$( function() {
+    $( "#polz3" ).slider({
+        range: "max",
+        min: 10,
+        max: 2000,
+        step: 10,
+        slide: function( event, ui ) {
+            $( "#polz3-inp" ).val( ui.value );
+        }
+    });
+    $( "#polz3-inp" ).val( $( "#polz3" ).slider( "value" ) );
+});
+
+$( function() {
+    $( "#polz4" ).slider({
+        range: "max",
+        min: 50,
+        max: 100,
+        step: 50,
+        slide: function( event, ui ) {
+            $( "#polz4-inp" ).val( ui.value );
+        }
+    });
+    $( "#polz4-inp" ).val( $( "#polz4" ).slider( "value" ) );
+});
+
+$( function() {
+    $( "#polz5" ).slider({
+        range: "max",
+        min: 1,
+        max: 12,
+        step: 1,
+        slide: function( event, ui ) {
+            $( "#polz5-inp" ).val( ui.value );
+        }
+    });
+    $( "#polz5-inp" ).val( $( "#polz5" ).slider( "value" ) );
+});
+
+// конец ползунков
+
 $(function() {
 
 	// плавный переход к якорям
@@ -55,134 +223,3 @@ $(function() {
 	$("img, a").on("dragstart", function(event) { event.preventDefault(); });
 	
 });
-
-// Ползунки на page6.html
-
-jQuery(function() {
-    var core         	= 150, 
-        ddr       		= 1, 
-        hdd           	= 10,  
-        internetWidth   = 10,
-        payment			= 1, 
-        oneMonth		= 0,
-        threeMonth		= 0,
-        total 			= 299;
-
-
-    // Функция расчета
-    function recount() {
-        total = core 
-        		+ddr
-        		+hdd
-        		+internetWidth
-        		+payment
-
-
-        jQuery("#u_KwMonth_cifra span").html((SP_Kw).toFixed(0));
-        jQuery("#oneYearSaving span").html(oneYearSaving);
-        jQuery("#fiveYearSaving span").html(fiveYearSaving);
-        jQuery("#tenYearSaving span").html(tenYearSaving);
-        jQuery("#treesCount span").html(treesCount);
-    }
-    recount();
-
-    $(document).on("change keyup", "#polz1", function() {
-        core *= $("#polz1-inp").val;
-
-        recount();
-    });
-
-    $(document).on("change keyup", "#polz2", function() {
-        ddr *=  $("#polz2-inp").val;
-
-        recount();
-    });
-
-    $(document).on("change keyup", "#polz3", function() {
-        hdd *= $("#polz3-inp").val;
-
-        recount();
-    });
-
-    $(document).on("change keyup", "#polz4", function() {
-        internetWidth *= $("#polz4-inp").val;
-        recount();
-    });
-
-    $(document).on("change keyup", "#polz5", function() {
-        payment *= $("#polz5-inp").val;
-        recount();
-    });
-});
-
-
-
-
-
-//STYLES
-
-$( function() {
-	$( "#polz1" ).slider({
-		range: "max",
-		min: 2,
-		max: 24,
-		slide: function( event, ui ) {
-			$( "#polz1-inp" ).val( ui.value );
-		}
-	});
-	$( "#polz1-inp" ).val( $( "#polz1" ).slider( "value" ) );
-});
-
-$( function() {
-	$( "#polz2" ).slider({
-		range: "max",
-		min: 1,
-		max: 64,
-		slide: function( event, ui ) {
-			$( "#polz2-inp" ).val( ui.value );
-		}
-	});
-	$( "#polz2-inp" ).val( $( "#polz2" ).slider( "value" ) );
-});
-
-$( function() {
-	$( "#polz3" ).slider({
-		range: "max",
-		min: 10,
-		max: 2000,
-		step: 10,
-		slide: function( event, ui ) {
-			$( "#polz3-inp" ).val( ui.value );
-		}
-	});
-	$( "#polz3-inp" ).val( $( "#polz3" ).slider( "value" ) );
-});
-
-$( function() {
-	$( "#polz4" ).slider({
-		range: "max",
-		min: 10,
-		max: 22,
-		step: 1,
-		slide: function( event, ui ) {
-			$( "#polz4-inp" ).val( ui.value );
-		}
-	});
-	$( "#polz4-inp" ).val( $( "#polz4" ).slider( "value" ) );
-});
-
-$( function() {
-	$( "#polz5" ).slider({
-		range: "max",
-		min: 1,
-		max: 12,
-		step: 1,
-		slide: function( event, ui ) {
-			$( "#polz5-inp" ).val( ui.value );
-		}
-	});
-	$( "#polz5-inp" ).val( $( "#polz5" ).slider( "value" ) );
-});
-
-// конец ползунков
-
