@@ -852,11 +852,11 @@ p {
 }
 
 .page6-calc .slider-wrap .polz p.center1 {
-    left: 15%;
+    left: 28%;
 }
 
 .page6-calc .slider-wrap .polz p.center2 {
-    left: 42%;
+    left: 63%;
 }
 
 .page6-calc .slider-wrap .polz p.center3 {
@@ -892,7 +892,7 @@ p {
 .page6-calc .slider-wrap .for-numb input {
     font-family: "OpenSansBold", sans-serif;
     color: #fff;
-    width: 20px;
+    width: 30px;
     min-width: 10px;
     background-color: transparent;
     border-radius: 0;
