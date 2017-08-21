@@ -1,321 +1,249 @@
 // Ползунки на page6.html
+$(function () {
+    recount();
+    (function ($, undefined) {
+        var $form = $("#changeLoc");
 
-var core         	    = 1,
-    ddr       		    = 1,
-    hdd           	    = 10,
-    netFrequency        = 50,
-    months			    = 1,
-    coreCost           = null,
-    ddrCost            = null,
-    hddCost          = null,
-    netFrequencyCost  = null,
-    monthsCost       = 250,
-    total                 = null;
+        $form.on("click", "#loc1", function (event) {
+             recount.call(changeData(), changeCores(), changeDDR(),changeHDD(),changeFreq());
+        });
 
+        $form.on("click", "#loc2", function (event) {
+            recount.call(changeData(), changeCores(), changeDDR(),changeHDD(),changeFreq());
+        });
 
+        $form.on("click", "#loc1", function (event) {
+            recount.call(changeData(), changeCores(), changeDDR(),changeHDD(),changeFreq());
+        });
+    })(jQuery);
+
+    $('#polz5').on( 'click', changeData());
+    $('#polz1').on( 'click', changeCores());
+    $('#polz2').on( 'click', changeDDR());
+    $('#polz3').on( 'click', changeHDD());
+    $('#polz4').on( 'click', changeFreq());
+});
 
 // Функция расчета
+
 function recount() {
-    total = coreCost
-        +ddrCost
-        +hddCost
-        +netFrequencyCost
-        +monthsCost;
+    if ($('#loc1').prop('checked')) {
+        //MOSCOW
+        var monthPrices = {1: 250, 3: 750, 6: 1500, 12: 3000},
+            corePrices = {
+                1: {1: 0, 2: 150, 3: 300, 4: 450, 6: 750, 8: 850, 12: 1200},
+                3: {1: 0, 2: 450, 3: 900, 4: 1350, 6: 2250, 8: 2550, 12: 3600},
+                6: {1: 0, 2: 840, 3: 1560, 4: 2160, 6: 3450, 8: 4410, 12: 6600},
+                12: {1: 0, 2: 1560, 3: 3000, 4: 4140, 6: 6600, 8: 8400, 12: 11880}
+            },
 
-    jQuery("#billing").html(total);
-}
+            ddrPrices = {
+                1: {512: 0, 1: 50, 2: 100, 3: 200, 4: 300, 6: 500, 8: 700, 10: 900, 12: 1000},
+                3: {
+                    512: 0,
+                    1: 50 * 3,
+                    2: 100 * 3,
+                    3: 200 * 3,
+                    4: 300 * 3,
+                    6: 500 * 3,
+                    8: 700 * 3,
+                    10: 900 * 3,
+                    12: 1000 * 3
+                },
+                6: {512: 0, 1: 285, 2: 570, 3: 1140, 4: 1710, 6: 2850, 8: 3990, 10: 5130, 12: 5700},
+                12: {512: 0, 1: 540, 2: 1080, 3: 2160, 4: 3240, 6: 5400, 8: 7980, 10: 9720, 12: 10800}
+            },
+
+            hddPrices = {
+                1: {5: 0, 7: 20, 10: 25, 15: 50, 20: 75, 25: 100, 30: 125, 40: 150, 50: 175},
+                3: {
+                    5: 0,
+                    7: 20 * 3,
+                    10: 25 * 3,
+                    15: 50 * 3,
+                    20: 75 * 3,
+                    25: 100 * 3,
+                    30: 125 * 3,
+                    40: 150 * 3,
+                    50: 175 * 3
+                },
+                6: {5: 0, 7: 20 * 6, 10: 25 * 6, 15: 50 * 6, 20: 300, 25: 100 * 6, 30: 125 * 6, 40: 2100, 50: 175 * 6},
+                12: {
+                    5: 0,
+                    7: 20 * 12,
+                    10: 25 * 12,
+                    15: 50 * 12,
+                    20: 300,
+                    25: 100 * 12,
+                    30: 125 * 12,
+                    40: 2100,
+                    50: 175 * 12
+                }
+            },
+
+            netFrequencyPrices = {
+                1: {50: 0, 100: 250},
+                3: {50: 0, 100: 250 * 3},
+                6: {50: 0, 100: 1200},
+                12: {50: 0, 100: 2280},
+            },
+
+            coreCost = corePrices[$("#polz5-inp").val()][$("#polz1-inp").val()],
+
+            ddrCost = ddrPrices[$("#polz5-inp").val()][$("#polz2-inp").val()],
+
+            hddCost = hddPrices[$("#polz5-inp").val()][$("#polz3-inp").val()],
+
+            netFrequencyCost = netFrequencyPrices[$("#polz5-inp").val()][$("#polz4-inp").val()],
+
+            monthsCost = monthPrices[$("#polz5-inp").val()],
+
+            total = coreCost + ddrCost + hddCost + netFrequencyCost + monthsCost;
+
+    } else {
+
+        //FRANCE
+        var monthPrices = {1: 150, 3: 450, 6: 900, 12: 1800},
+
+            corePrices = {
+                1: {1: 0, 2: 50, 3: 100, 4: 150},
+                3: {1: 0, 2: 50 * 3, 3: 100 * 3, 4: 150 * 3},
+                6: {1: 0, 2: 50 * 6, 3: 100 * 6, 4: 150 * 6},
+                12: {1: 0, 2: 50 * 12, 3: 100 * 12, 4: 150 * 12}
+            },
+
+            ddrPrices = {
+                1: {512: 0, 1: 50, 2: 100, 3: 200, 4: 300},
+                3: {512: 0, 1: 50 * 3, 2: 100 * 3, 3: 200 * 3, 4: 300 * 3},
+                6: {512: 0, 1: 50 * 6, 2: 100 * 6, 3: 200 * 6, 4: 300 * 6},
+                12: {512: 0, 1: 50 * 12, 2: 100 * 12, 3: 200 * 12, 4: 300 * 12}
+            },
+
+            hddPrices = {
+                1: {5: 0, 7: 20, 10: 25, 15: 50, 20: 75, 25: 100, 30: 125, 40: 150, 50: 175},
+                3: {
+                    5: 0,
+                    7: 20 * 3,
+                    10: 25 * 3,
+                    15: 50 * 3,
+                    20: 75 * 3,
+                    25: 100 * 3,
+                    30: 125 * 3,
+                    40: 150 * 3,
+                    50: 175 * 3
+                },
+                6: {5: 0, 7: 20 * 6, 10: 25 * 6, 15: 50 * 6, 20: 300, 25: 100 * 6, 30: 125 * 6, 40: 2100, 50: 175 * 6},
+                12: {
+                    5: 0,
+                    7: 20 * 12,
+                    10: 25 * 12,
+                    15: 50 * 12,
+                    20: 300,
+                    25: 100 * 12,
+                    30: 125 * 12,
+                    40: 2100,
+                    50: 175 * 12
+                }
+            },
+
+            netFrequencyPrices = {
+                1: {100: 0, 200: 100},
+                3: {100: 0, 200: 100 * 3},
+                6: {100: 0, 200: 100 * 6},
+                12: {100: 0, 200: 100 * 12}
+            },
+
+            coreCost = corePrices[$("#polz5-inp").val()][$("#polz1-inp").val()],
+
+            ddrCost = ddrPrices[$("#polz5-inp").val()][$("#polz2-inp").val()],
+
+            hddCost = hddPrices[$("#polz5-inp").val()][$("#polz3-inp").val()],
+
+            netFrequencyCost = netFrequencyPrices[$("#polz5-inp").val()][$("#polz4-inp").val()],
+
+            monthsCost = monthPrices[$("#polz5-inp").val()],
+
+            total = coreCost + ddrCost + hddCost + netFrequencyCost + monthsCost;
+
+    }
+
+        jQuery("#billing").html(total);
+    }
 
 
-    /*$(".slider-wrap").on("change click keyup", "#polz1", function() {
-
-        console.log("click");
-        core = $( "#polz1" ).slider( "value" );
-        coreCost = (core === 0 ) ? 0 : // 1
-            (core === 1 ) ? 150 :   //2
-                (core === 2 ) ? 300 :   //3
-                    (core === 3 ) ? 450 :   //4
-                        (core === 4 ) ? 750 :   //6
-                            (core === 5 ) ? 850 : //8
-                                    (core === 6 ) ? 1200 : //12
-                                      console.log ("coreCost ===" + coreCost);
-
-        recount();
-        return false;
-    });
-
-    $(document).on("change click keyup", "#polz2", function() {
-        ddr =  $( "#polz2" ).slider( "value" );
-        ddrCost = (ddr === 0) ? 0 :
-            (ddr === 1) ? 50 :
-                (ddr === 2) ? 100 :
-                    (ddr === 3) ? 200 :
-                        (ddr === 4) ? 300 :
-                            (ddr === 5) ? 500 :
-                                (ddr === 6) ? 700 :
-                                    (ddr === 7) ? 900 :
-                                        (ddr === 8) ? 1000 :
-                                            console.log ("ddrCost ===" + ddrCost);
-        recount();
-        return false;
-    });
-
-    $(document).on("change click keyup", "#polz3", function() {
-        hdd = $( "#polz3" ).slider( "value" );
-        hddCost = (hdd === 0) ? 0:
-            (hdd === 1) ? 20:
-                (hdd === 2) ? 25:
-                    (hdd === 3) ? 50:
-                        (hdd === 4) ? 75:
-                            (hdd === 5) ? 100:
-                                (hdd === 6) ? 125:
-                                    (hdd === 7) ? 150:
-                                        (hdd === 8) ? 175:
-                                            console.log ("hddCost ===" + hddCost);
-
-        recount();
-    });
-
-    $(document).on("change click keyup", "#polz4", function() {
-        netFrequency = $( "#polz4" ).slider( "value" );
-        netFrequencyCost = (netFrequency === 0) ? 0:
-            (netFrequency === 1) ? 100:
-                console.log ("netFrequencyCost ===" + netFrequencyCost);
-
-        recount();
-    });
-
-    $(document).on("change click", "#polz5", function() {
-        months = $( "#polz5" ).slider( "value" );
-        monthsCost = (months === 0) ? 250 :
-            (months === 1) ? 750 :
-                (months === 2) ? 1500 :
-                    (months === 3) ? 3000 :
-                        console.log ("monthsCost ===" + monthsCost);
-
-        recount();
-    });
-*/
-//Стили ползунков
-
-$( function() {
-    var propertyValue = [1, 3, 6, 12];
+function changeData () {
     $( "#polz5" ).slider({
         range: "max",
-        min: 0,
         max: 3,
-        value: 0,
         step: 1,
         slide: function( event, ui ) {
+            var propertyValue = [1, 3, 6, 12];
             $( "#polz5-inp" ).val( propertyValue [ui.value] );
-
-            switch(propertyValue [ui.value]) {
-                case 1:
-                    monthsCost = 250;
-                    break;
-                case 3:
-                    monthsCost = 750;
-                    break;
-                case 6:
-                    monthsCost = 1500;
-                    break;
-                case 12:
-                    monthsCost = 3000;
-                    break;
-                default:
-                    console.log("Error");
-            }
-            recount()
+           recount();
         }
     });
-    //  $( "#polz5-inp" ).val( $( "#polz5" ).slider( "value" ) );
-});
+};
 
-$( function() {
-    var propertyValue = [1, 2, 3, 4, 6, 8, 12];
 
-    $( "#polz1" ).slider({
-        range: "max",
-        min: 0,
-        max: 6,
-        value: 0,
-        step: 1,
-        slide: function( event, ui ) {
-            $( "#polz1-inp" ).val( propertyValue [ui.value] );
-
-            switch (months) {
-                case 1:
-                    switch (propertyValue [ui.value]) {
-                        case 1:
-                            coreCost = 0;
-                            break;
-                        case 2:
-                            coreCost = 150;
-                            break;
-                        case 3:
-                            coreCost = 300;
-                            break;
-                        case 4:
-                            coreCost = 450;
-                            break;
-                        case 6:
-                            coreCost = 750;
-                            break;
-                        case 8:
-                            coreCost = 850;
-                            break;
-                        case 12:
-                            coreCost = 1200;
-                            break;
-                        default:
-                            console.log(propertyValue [ui.value]);
-                    }
-                    break;
-
-                case 3:
-                    switch (propertyValue [ui.value]) {
-                        case 1:
-                            coreCost = 0;
-                            break;
-                        case 2:
-                            coreCost = 150 * 3;
-                            break;
-                        case 3:
-                            coreCost = 300 * 3;
-                            break;
-                        case 4:
-                            coreCost = 450 * 3;
-                            break;
-                        case 6:
-                            coreCost = 750 * 3;
-                            break;
-                        case 8:
-                            coreCost = 850 * 3;
-                            break;
-                        case 12:
-                            coreCost = 1200 * 3;
-                            break;
-                        default:
-                            console.log(propertyValue [ui.value]);
-                    }
-                    break;
-
-                case 6:
-                    switch (propertyValue [ui.value]) {
-                        case 1:
-                            coreCost = 0;
-                            break;
-                        case 2:
-                            coreCost = 840;
-                            break;
-                        case 3:
-                            coreCost = 1560;
-                            break;
-                        case 4:
-                            coreCost = 2160;
-                            break;
-                        case 6:
-                            coreCost = 3450;
-                            break;
-                        case 8:
-                            coreCost = 4410;
-                            break;
-                        case 12:
-                            coreCost = 6600;
-                            break;
-                        default:
-                            console.log("Error");
-                    }
-                    break;
-
-                case 12:
-                    switch (propertyValue [ui.value]) {
-                        case 1:
-                            coreCost = 0;
-                            break;
-                        case 2:
-                            coreCost = 1560;
-                            break;
-                        case 3:
-                            coreCost = 3000;
-                            break;
-                        case 4:
-                            coreCost = 4140;
-                            break;
-                        case 6:
-                            coreCost = 6600;
-                            break;
-                        case 8:
-                            coreCost = 8400;
-                            break;
-                        case 12:
-                            coreCost = 11880;
-                            break;
-                        default:
-                            console.log(propertyValue [ui.value]);
-                    }
-                    break;
-
-                default:
-                    console.log(months);
-                    break;
+function changeCores() {
+    if($('#loc1').prop('checked')) {
+        $( "#polz1" ).slider({
+            range: "max",
+            max: 6,
+            step: 1,
+            slide: function( event, ui ) {
+                var propertyValue = [1, 2, 3, 4, 6, 8, 12];
+                $( "#polz1-inp" ).val( propertyValue [ui.value] );
+                recount();
             }
+        });
 
-recount()
-        }
-    });
-   // $( "#polz1-inp" ).val( sliderValue [$( "#polz1" ).slider( "value" )] );
-});
+    } else {
 
-$( function() {
-    var propertyValue = [512, 1, 2, 3, 4, 6, 8, 10, 12];
-    $( "#polz2" ).slider({
-        range: "max",
-        min: 0,
-        max: 8,
-        value: 0,
-        step: 1,
-        slide: function( event, ui ) {
-            $( "#polz2-inp" ).val( propertyValue [ui.value] );
-
-            switch(propertyValue [ui.value]) {
-                case 512:
-                    ddrCost = 0;
-                    break;
-                case 1:
-                    ddrCost = 50;
-                    break;
-                case 2:
-                    ddrCost = 100;
-                    break;
-                case 3:
-                    ddrCost = 200;
-                    break;
-                case 4:
-                    ddrCost = 300;
-                    break;
-                case 6:
-                    ddrCost = 500;
-                    break;
-                case 8:
-                    ddrCost = 700;
-                    break;
-                case 10:
-                    ddrCost = 900;
-                    break;
-                case 12:
-                    ddrCost = 1000;
-                    break;
-                default:
-                    console.log("Error");
+        $( "#polz1" ).slider({
+            range: "max",
+            max: 3,
+            step: 1,
+            slide: function( event, ui ) {
+                var propertyValue = [1, 2, 3, 4];
+                $( "#polz1-inp" ).val( propertyValue [ui.value] );
+                recount();
             }
-            recount()
-        }
-    });
-    //$( "#polz2-inp" ).val( $( "#polz2" ).slider( "value" ) );
-});
+        })
+    };
+    }
 
-$( function() {
-    var propertyValue = [5, 7, 10, 15, 20, 25, 30, 40, 50];
+
+
+function changeDDR() {
+    if ($('#loc1').prop('checked')) {
+        $("#polz2").slider({
+            range: "max",
+            max: 8,
+            step: 1,
+            slide: function (event, ui) {
+                var propertyValue = [512, 1, 2, 3, 4, 6, 8, 10, 12];
+                $("#polz2-inp").val(propertyValue [ui.value]);
+                recount();
+            }
+        });
+
+    } else {
+
+        $("#polz2").slider({
+            range: "max",
+            max: 4,
+            step: 1,
+            slide: function (event, ui) {
+                var propertyValue = [512, 1, 2, 3, 4];
+                $("#polz2-inp").val(propertyValue [ui.value]);
+                recount();
+            }
+        });
+    }
+}
+
+function changeHDD() {
     $( "#polz3" ).slider({
         range: "max",
         min: 0,
@@ -323,72 +251,39 @@ $( function() {
         value: 0,
         step: 1,
         slide: function( event, ui ) {
+            var propertyValue = [5, 7, 10, 15, 20, 25, 30, 40, 50];
             $( "#polz3-inp" ).val( propertyValue [ui.value] );
-
-            switch(propertyValue [ui.value]) {
-                case 5:
-                    hddCost = 0;
-                    break;
-                case 7:
-                    hddCost = 20;
-                    break;
-                case 10:
-                    hddCost = 25;
-                    break;
-                case 15:
-                    hddCost = 50;
-                    break;
-                case 20:
-                    hddCost = 75;
-                    break;
-                case 25:
-                    hddCost = 100;
-                    break;
-                case 30:
-                    hddCost = 125;
-                    break;
-                case 40:
-                    hddCost = 150;
-                    break;
-                case 50:
-                    hddCost = 175;
-                    break;
-                default:
-                    console.log("Error");
-            }
-            recount()
+            recount();
         }
     });
-   // $( "#polz3-inp" ).val( $( "#polz3" ).slider( "value" ) );
-});
+};
 
-$( function() {
-    var propertyValue = [50, 100];
+function changeFreq() {
+    if ($('#loc1').prop('checked')) {
     $( "#polz4" ).slider({
         range: "max",
-        min: 0,
         max: 1,
-        value: 0,
         step: 1,
         slide: function( event, ui ) {
+            var propertyValue = [50, 100];
             $( "#polz4-inp" ).val( propertyValue [ui.value] );
-
-            switch(propertyValue [ui.value]) {
-                case 50:
-                    netFrequencyCost = 0;
-                    break;
-                case 100:
-                    netFrequencyCost = 250;
-                    break;
-                default:
-                    console.log("Error");
-            }
-            recount()
+            recount();
         }
     });
-    //$( "#polz4-inp" ).val( $( "#polz4" ).slider( "value" ) );
-});
 
+    } else {
+        $( "#polz4" ).slider({
+            range: "max",
+            max: 1,
+            step: 1,
+            slide: function( event, ui ) {
+                var propertyValue = [100, 200];
+                $( "#polz4-inp" ).val( propertyValue [ui.value] );
+                recount();
+            }
+        });
+    }
+}
 
 
 // конец ползунков
